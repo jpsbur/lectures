@@ -1,0 +1,327 @@
+\documentclass[12pt]{beamer}
+
+\usepackage[russian,english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+%\usepackage{beamerthemeshadow}
+\usepackage{color}
+
+\definecolor{orange}{rgb}{1,0.5,0}
+\definecolor{darkgreen}{rgb}{0,0.8,0}
+\definecolor{darkblue}{rgb}{0,0,0.8}
+
+\usetheme{Goettingen}
+
+\begin{document}
+\title{KDB/Engine: базы данных}
+\author{Юрий Петров}
+\date{июль 2014}
+
+\frame{\titlepage}
+
+\frame{
+  \frametitle{О чём речь}
+
+  \pause
+  \begin{itemize}
+    \item Нужно хранить большие объёмы данных:
+    \begin{itemize}
+      \item списки целых чисел
+      \item текстовые сообщения
+      \item рейтинги с затуханием
+      \item базы для поиска
+      \item et cetera
+    \end{itemize}
+    \pause
+
+    \item Для каждой цели --- свой набор структур данных
+    \pause
+
+    \item Нужна общая схема построения баз
+  \end{itemize}
+}
+
+\frame{
+  \frametitle{Требования к схеме}
+
+  \pause
+  \begin{itemize}
+    \item Универсальность
+    \pause
+    \item Масштабируемость
+    \pause
+    \item Отказоустойчивость
+  \end{itemize}
+}
+
+\frame{
+  \frametitle{Требования к схеме: универсальность}
+
+  \pause
+  \begin{itemize}
+    \item Общая вне зависимости от хранимых данных
+    \pause
+    \item Расширяется и усложняется при необходимости
+  \end{itemize}
+}
+
+\frame{
+  \frametitle{Требования к схеме: масштабируемость}
+
+  \pause
+  \begin{itemize}
+    \item Поддерживает распределённое хранение
+    \pause
+    \item Поддерживает изменение масштабов данных
+  \end{itemize}
+}
+
+\frame{
+  \frametitle{Требования к схеме: отказоустойчивость}
+
+  \pause
+  \begin{itemize}
+    \item Удобство резервного копирования
+    \pause
+    \item Быстрое восстановление в случае отказа
+  \end{itemize}
+}
+
+\frame{
+  \frametitle{Схема: состояние, лог, снимок}
+
+  \pause
+  \begin{itemize}
+    \item Состояние базы --- все данные, записанные в неё с начала времён
+    \pause
+    \item Состояние изменяется внешними запросами
+    \pause
+    \item Лог --- список всех запросов изменения
+    \pause
+    \item Снимок --- описание состояния базы на фиксированный момент
+  \end{itemize}
+}
+
+\frame{
+  \frametitle{Схема: лог}
+
+  \pause
+  \begin{itemize}
+    \item Лог состоит из событий
+    \pause
+    \item Событие:
+      \begin{itemize}
+        \item Общий заголовок
+        \item Специфичные данные
+      \end{itemize}
+    \pause
+    \item События упорядочены
+    \pause
+    \item Получить состояние базы --- воспроизвести все события
+      до текущего момента
+  \end{itemize}
+}
+
+\frame{
+  \frametitle{Схема: снимок}
+
+  \pause
+  \begin{itemize}
+    \item Если событий много, проигрывать их долго
+    \pause
+    \item Можно записывать состояние базы на данный момент
+    \pause
+    \item Момент --- это позиция в логе
+  \end{itemize}
+}
+
+\frame{
+  \frametitle{Схема: масштабирование}
+
+  \pause
+  \begin{itemize}
+    \item Выберем целочисленный параметр $x$ дробления
+      \begin{itemize}
+        \item Идентификатор списка
+        \item Идентификатор пользователя
+        \item Хеш от ключа
+      \end{itemize}
+    \pause
+    \item Настроим $n$ баз
+    \pause
+    \item Запишем событие в экземпляр $x \mod n$
+    \pause
+    \item Основная проблема --- выбор параметра дробления
+  \end{itemize}
+}
+
+\frame{
+  \frametitle{Схема: перемасштабирование}
+
+  \pause
+  \begin{itemize}
+    \item Смена параметра дробления сложна, но возможна
+    \pause
+    \item При увеличении нагрузки каждый экземпляр
+      можно раздробить в два или более раз
+  \end{itemize}
+}
+
+\frame{
+  \frametitle{Создание снимков}
+
+  \pause
+  \begin{itemize}
+    \item Online-подход
+    \begin{itemize}
+      \item Состояние в памяти и снимок очень похожи
+      \item Можно записывать снимок как \textit{почти} копию состояния
+    \end{itemize}
+    \pause
+    \item Offline-подход
+    \begin{itemize}
+      \item Алгоритм создания снимка может быть сложным
+      \item Можно воспроизводить события лога отдельно
+    \end{itemize}
+  \end{itemize}
+}
+
+\frame{
+  \frametitle{Создание снимков: online}
+
+  \pause
+  \begin{itemize}
+    \item Плюсы
+      \begin{itemize}
+        \item Можно переиспользовать уже созданные структуры
+        \item Нет дополнительной нагрузки на чтение с диска
+      \end{itemize}
+    \pause
+    \item Минусы
+      \begin{itemize}
+        \item Требуется запущенный движок
+        \item Ресурсы можно выделить только на том же сервере
+        \item Сложнее обновить версию
+      \end{itemize}
+  \end{itemize}
+}
+
+\frame{
+  \frametitle{Создание снимков: offline}
+
+  \pause
+  \begin{itemize}
+    \item Плюсы
+      \begin{itemize}
+        \item Можно создавать снимки в любом месте
+        \item Просто сделать новую версию
+      \end{itemize}
+    \pause
+    \item Минусы
+      \begin{itemize}
+        \item Требуется отдельный процесс, полностью читающий лог
+        \item Больше нагрузка на диск
+      \end{itemize}
+  \end{itemize}
+}
+
+\frame{
+  \frametitle{Резервное копирование}
+
+  \pause
+  \begin{itemize}
+    \item Потеря снимка не чревата потерей данных, но влияет на время
+    \pause
+    \item Резервную копию лога можно просто дописывать в конец
+    \pause
+    \item Эффективно копировать на другой диск
+  \end{itemize}
+}
+
+\frame{
+  \frametitle{Репликация}
+
+  \pause
+  \begin{itemize}
+    \item Масштабирование нагрузки: можно запустить несколько
+      экземпляров движка на одном и том же логе
+    \pause
+    \item Резервное копирование: можно онлайн копировать данные
+      на другие серверы
+    \pause
+    \item Перенос данных
+  \end{itemize}
+}
+
+\frame{
+  \frametitle{Проверка целостности}
+
+  \pause
+  \begin{itemize}
+    \item Циклическая проверка целостности (CRC32)
+    \pause
+    \item Можно улучшить при наличии схемы
+  \end{itemize}
+}
+
+\frame{
+  \frametitle{Шифрование и сжатие}
+  
+  \pause
+  \begin{itemize}
+    \item Логи можно сжимать
+      \begin{itemize}
+        \item Увеличивается скорость чтения с диска
+        \item Незначительно уменьшается скорость обработки
+      \end{itemize}
+    \pause
+    \item Логи можно шифровать
+      \begin{itemize}
+        \item Важно сначала сжимать, потом шифровать
+        \item Важно думать о том, где хранить ключ
+      \end{itemize}
+    \pause
+  \end{itemize}
+}
+
+\frame{
+  \frametitle{Разделение чтения и записи}
+
+  \pause
+  \begin{itemize}
+    \item Запустить два экземпляра:
+      \begin{itemize}
+        \item Один только записывает данные в лог
+        \item Второй читает и выполняет запросы
+          (работает как читающая реплика)
+      \end{itemize}
+    \pause
+    \item Увеличивает отказоустойчивость
+    \pause
+    \item Почти не влияет на остальные параметры
+  \end{itemize}
+}
+
+\frame{
+  \frametitle{Заключение}
+
+  \pause
+  \begin{itemize}
+    \item \texttt{https://github.com/vk-com/kphp-kdb}
+  \end{itemize}
+}
+
+% Запросы
+% Бинлоги
+% Снимки
+% Запуск
+% Переиндексирование
+% Резервное копирование
+% Репликация
+% Устойчивость
+% Проверка целостности
+% Разделение чтения и записи
+
+% GMS?
+
+\end{document}

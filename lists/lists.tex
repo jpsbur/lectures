@@ -1,0 +1,70 @@
+\documentclass[12pt]{beamer}
+
+\usepackage[russian,english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage{beamerthemeshadow}
+\usepackage{color}
+
+\definecolor{orange}{rgb}{1,0.5,0}
+\definecolor{darkgreen}{rgb}{0,0.8,0}
+\definecolor{darkblue}{rgb}{0,0,0.8}
+
+\begin{document}
+\title{Базы данных для хранения списков, или Зачем нужны декартовы деревья, чтобы поставить сердечко}
+\author{Юрий Петров}
+\date{июль 2014 года}
+
+\frame{\titlepage}
+
+\frame{
+  \frametitle{Задача}
+
+  Задача
+  \pause
+  \begin{itemize}
+    \item Поддерживать списки целых чисел
+    \pause
+    \item Уметь:
+      \begin{itemize}
+        \item добавлять элемент
+        \item удалять элемент
+        \item проверять наличие элемента
+        \item получить список или его часть
+      \end{itemize}
+    \pause
+    \item Пример --- ``лайки'':
+      \begin{itemize}
+        \item Список --- запись
+        \item Элемент списка --- тот, кто поставил ``лайк''
+      \end{itemize}
+  \end{itemize}
+}
+
+\frame{
+  \frametitle{Статический подход}
+
+  Статический подход
+  \pause
+  \begin{itemize}
+    \item Предположим: запросы на изменение уже выполнены
+    \pause
+    \item Выберем структуру
+      \begin{itemize}
+        \item Упорядоченный массив для каждого списка
+        \item Просто построить, просто получить ответ
+      \end{itemize}
+  \end{itemize}
+}
+
+% Задача
+% Подход статический
+%  отсортированный список
+%  хеш-таблица?
+% Подход динамический
+%  деревья поиска
+%  хеш-таблицы?
+% Подход комбинированный
+% Переиндексирование
+
+\end{document}
