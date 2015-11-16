@@ -1,0 +1,341 @@
+\documentclass[12pt]{beamer}
+
+\usepackage[russian,english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage{color}
+
+\definecolor{orange}{rgb}{1,0.5,0}
+\definecolor{orange}{rgb}{1,0,0}
+\definecolor{darkgreen}{rgb}{0,0.8,0}
+\definecolor{darkblue}{rgb}{0,0,0.8}
+\definecolor{grey}{rgb}{0.5,0.5,0.5}
+\definecolor{lightgrey}{rgb}{0.8,0.8,0.8}
+
+\usetheme{Singapore}
+
+\begin{document}
+\title{Как сделать задачу}
+\author{Юрий Петров}
+\date{август 2015}
+
+\frame{\titlepage}
+
+\frame{
+  \frametitle{Что такое задача?}
+
+  \pause
+
+  \begin{tabular}{cccc}
+    \visible<4->{\color{darkblue}{чекер}} & \visible<6->{теги} & \visible<4->{\color{blue}{генераторы}} & \visible<3->{\color{darkgreen}{условие}} \\
+    \visible<6->{разбор} & \visible<2->{\color{orange}{\Huge идея}} & \visible<6->{история} & \visible<6->{версии} \\
+    \visible<6->{описание} & \visible<5->{\scriptsize неверные решения} & \visible<2->{\color{red}{\Large решение}} & \visible<6->{архивы} \\
+    \visible<3->{\color{green}{\small \bf набор тестов}} & \visible<6->{статистика} & \visible<6->{картинки} & \visible<4->{валидатор} \\
+  \end{tabular}
+}
+
+\section{Части задачи}
+\frame{
+  \frametitle{С чего начать?}
+
+  Всем от задачи нужно разное
+}
+\frame{
+  \frametitle{Что нужно участникам?}
+
+  \begin{center}
+    \begin{tabular}{cc}
+      \visible<2->{Условие} & \visible<2->{90\%} \\
+      \visible<3->{Тесты} & \visible<3->{50\%} \\
+      \visible<4->{\vdots} & \\
+      \visible<5->{\color{grey}{Разбор}} & \visible<5->{\color{grey}{20\%}} \\
+      \visible<6->{\color{lightgrey}{Архив}} & \visible<6->{\color{lightgrey}{10\%}} \\
+    \end{tabular}
+  \end{center}
+}
+\frame{
+  \frametitle{Что нужно системе?}
+  
+  \begin{center}
+    \begin{tabular}{cc}
+      \visible<2->{Тесты} & \visible<2->{99\%} \\
+      \visible<3->{Чекер} & \visible<3->{99\%} \\
+      \visible<4->{\vdots} & \\
+      \visible<5->{\color{grey}{Интерактор}} & \visible<5->{\color{grey}{5\%}} \\
+      \visible<5->{\color{grey}{Что-то еще}} & \visible<5->{\color{grey}{5\%}} \\
+    \end{tabular}
+  \end{center}
+}
+\frame{
+  \frametitle{Что нужно автору?}
+
+  \begin{center}
+    \begin{tabular}{l}
+      \visible<2->{Всё :)} \\
+      \visible<3->{Уверенность} \\
+    \end{tabular}
+  \end{center}
+}
+\frame{
+  \frametitle{После соревнования}
+
+  \begin{center}
+    \begin{tabular}{l}
+      \visible<2->{Найти задачу} \\
+      \visible<3->{Дать задачу} \\
+      \visible<4->{\vdots} \\
+      \visible<5->{Исправить задачу} \\
+      \visible<6->{Сравнить результаты} \\
+    \end{tabular}
+  \end{center}
+}
+
+\section{Критерии хорошего}
+\subsection{Хорошее решение}
+\frame{
+  \frametitle{Хорошее решение}
+
+  \begin{center}
+    \begin{tabular}{l}
+      \visible<2->{Работает} \visible<3->{корректно} \visible<4->{и однозначно} \\
+      \visible<5->{Доказано} \\
+      \visible<6->{Возможно понять} \\
+    \end{tabular}
+  \end{center}
+}
+\frame{
+  \frametitle{Корректность решения}
+
+  \begin{center}
+    \begin{tabular}{lr}
+      \visible<2->{\color{darkgreen}{доказательство}} & \visible<6->{\color{orange}{случайность}} \\
+      \visible<3->{\color{darkgreen}{assert}} & \visible<7->{\color{orange}{неоднозначность}} \\
+      \visible<4->{\color{darkgreen}{запас времени}} & \visible<8->{\color{orange}{экзотичность}} \\
+      \visible<5->{\color{darkgreen}{запас памяти}} & \visible<9->{\color{orange}{нестандартность}} \\
+    \end{tabular}
+  \end{center}
+}
+\frame{
+  \frametitle{Понятность}
+
+  \begin{center}
+    \begin{tabular}{ccc}
+      \visible<2->{\color{orange}{короче}} & \visible<6->{не значит} & \visible<4->{\color{darkgreen}{понятнее}} \\
+      & & \\
+      \visible<3->{\color{orange}{\texttt{(a[i] += x) *= y;}}} & & \visible<5->{\color{darkgreen}{\texttt{cnt[i] += cntLeft;}}} \\
+      & & \visible<5->{\color{darkgreen}{\texttt{cnt[i] *= width; // ...}}} \\
+    \end{tabular}
+  \end{center}
+}
+\frame{
+  \frametitle{Хорошее условие}
+  
+  \begin{center}
+    \begin{tabular}{l}
+      \visible<2->{Возможно понять} \visible<3->{корректно} \visible<4->{и однозначно} \\
+      \visible<5->{Невозможно понять неправильно} \\
+      \visible<6->{Написано связно и на нужном языке} \\
+    \end{tabular}
+  \end{center}
+}
+\frame{
+  \frametitle{Хороший тест}
+
+  \begin{center}
+    \begin{tabular}{l}
+      \visible<2->{Корректен} \\
+      \visible<3->{Вы знаете, что он проверяет} \\
+      \visible<4->{И он действительно это проверяет!} \\
+      \visible<5->{Чем-то отличается от других тестов} \\
+    \end{tabular}
+  \end{center}
+}
+\frame{
+  \frametitle{Хороший набор тестов}
+
+  \begin{center}
+    \begin{tabular}{ll}
+      \visible<2->{Минимальные тесты} & \\
+      \visible<3->{Средие тесты} &  \visible<4->{по всем измерениям} \\
+      \visible<4->{Максимальные тесты} \\
+      \visible<5->{} \\
+    \end{tabular}
+  \end{center}
+}
+\frame{
+  \frametitle{Хорошее дублирующее решение}
+
+  \begin{center}
+    \begin{tabular}{l}
+      \visible<2->{Проходит все тесты} \\
+      \visible<3->{Не копирует код основного} \\
+      \visible<4->{Написано понятно, как и основное} \\
+      \visible<5->{Работает однозначно} \\
+      \visible<6->{\color{grey}{Написано кем-то другим}} \\
+    \end{tabular}
+  \end{center}
+}
+\frame{
+  \frametitle{Хорошее плохое решение}
+
+  \begin{center}
+    \begin{tabular}{l}
+      \visible<2->{Не проходит тесты}\visible<3->{\color{blue}{, и вы знаете, почему!}} \\
+      \visible<4->{Написано понятно, как и основное} \\
+      \visible<5->{Работает однозначно} \\
+      \visible<6->{Невозможно <<упихать>>} \\
+    \end{tabular}
+  \end{center}
+}
+\frame{
+  \frametitle{Хороший чекер}
+
+  \begin{center}
+    \begin{tabular}{l}
+      \visible<2->{Использует стандартные библиотеки} \\
+      \visible<3->{Соответствует условию} \\
+      \visible<4->{Соответствует здравому смыслу} \\
+      \visible<5->{Чем \textcolor{darkgreen}{мягче}, тем лучше} \\
+    \end{tabular}
+  \end{center}
+}
+\frame{
+  \frametitle{Хороший валидатор}
+
+  \begin{center}
+    \begin{tabular}{l}
+      \visible<2->{Использует стандартные библиотеки} \\
+      \visible<3->{Соответствует условию} \\
+      \visible<4->{Соответствует здравому смыслу} \\
+      \visible<5->{Чем \textcolor{orange}{строже}, тем лучше} \\
+    \end{tabular}
+  \end{center}
+}
+\frame{
+  \frametitle{Хороший генератор тестов}
+
+  \begin{center}
+    \begin{tabular}{l}
+      \visible<2->{Использует стандартные библиотеки} \\
+      \visible<3->{Однозначен} \\
+      \visible<4->{Неэкзотичен} \\
+      \visible<5->{Параметризуется} \\
+    \end{tabular}
+  \end{center}
+}
+
+\section{Автоматизация}
+\frame{
+  \frametitle{Немного истории}
+
+  \only<1>{Как выглядели задачи N лет назад}
+  \only<2>{
+    \begin{tabular}{ll}
+      примерно 20 лет назад & \\
+      \hline
+      \texttt{TST\_A1} & \texttt{ANS\_A1} \\
+      \texttt{TST\_A2} & \texttt{ANS\_A2} \\
+      \texttt{...} & \texttt{...} \\
+      \texttt{TST\_B1} & \texttt{ANS\_B1} \\
+      \texttt{...} & \texttt{...} \\
+    \end{tabular}
+  }
+  \only<3>{
+    \begin{tabular}{ll}
+      примерно 10 лет назад & \\
+      \hline
+      tests/01 & tests/01.a \\
+      tests/02 & tests/02.a \\
+      tests/do03.dpr & check.dpr \\
+      hardwood\_gk.dpr & hardwood\_mb.dpr \\
+      hardwood\_gk\_check.dpr & hardwood\_pm.dpr \\
+      hardwood\_re.java & hardwood\_as.java \\
+    \end{tabular}
+  }
+  \only<4>{
+    \begin{tabular}{ll}
+      примерно 5 лет назад и сейчас & \\
+      \hline
+      Check.java     & problem.properties  \\
+      Tests.java          & xtra\_as.dpr \\
+      xtra\_as\_il.dpr &   xtra\_md.hs \\
+      xtra\_re.cpp &   xtra\_strange\_wrong.dpr \\
+      Interact.java  & t.cmd \\
+      xtra\_as\_direct.dpr  & xtra\_as\_extra\_number.dpr \\
+      xtra\_as\_int.dpr &  xtra\_re.c \\
+      xtra\_re.java & \\
+    \end{tabular}
+  }
+  \only<5>{
+    \begin{tabular}{l}
+      сейчас с Polygon \\
+    \end{tabular}
+    \begin{tabular}{llll}
+      \hline \\
+      \scriptsize towin.exe  &    \scriptsize     olymp.sty     &    \scriptsize  problem.tex    &    \scriptsize  random.h     \\
+      \scriptsize rng.pas           &    \scriptsize     statements.ftl    &    \scriptsize  testlib.h     &    \scriptsize  testlib.pas  \\
+      \scriptsize check.dpr   &    \scriptsize     check.exe         &    \scriptsize  gen\_net.dpr       &    \scriptsize  gen\_net.exe     \\
+      \scriptsize gen\_ngon.dpr      &    \scriptsize     gen\_ngon.exe      &    \scriptsize  validator.cpp     &    \scriptsize  validator.exe     \\
+      \scriptsize solutions/ &    \scriptsize     convex\_ft.java   &    \scriptsize  convex\_ft.jar7   &    \scriptsize  convex\_ft.java.desc  \\
+      \scriptsize convex\_ft\_double.java  &    \scriptsize     convex\_ft\_double.jar7  &    \scriptsize  statements/ &    \scriptsize  russian/ \\
+      \scriptsize problem-properties.json  &    \scriptsize     problem.tex  &    \scriptsize  .html/ &    \scriptsize  .html/russian/ \\
+      \scriptsize problem.html  &    \scriptsize     problem-statement.css  &    \scriptsize  scripts/ &    \scriptsize  gen-answer.bat   \\
+      \scriptsize gen-input-via-file.bat  &    \scriptsize     gen-input-via-files.bat  &    \scriptsize  gen-input-via-stdout.bat   &    \scriptsize  run-validator-tests.bat  \\
+      \scriptsize run-checker-tests.bat  &    \scriptsize     gen-answer.sh   &    \scriptsize  gen-input-via-file.sh   &    \scriptsize  gen-input-via-files.sh  \\
+      \scriptsize gen-input-via-stdout.sh  &    \scriptsize     run-validator-tests.sh  &    \scriptsize  run-checker-tests.sh  &    \scriptsize  tests/ \\
+      \scriptsize check.dpr               &    \scriptsize     check.exe               &    \scriptsize  tags                     &    \scriptsize  problem.xml             \\
+      \scriptsize doall.bat               &    \scriptsize     wipe.bat                &    \scriptsize  doall.sh                &    \scriptsize  wipe.sh  \\
+    \end{tabular}
+  }
+}
+\frame{
+  \frametitle{Скрипты}
+
+  \begin{center}
+    \begin{tabular}{l}
+      \visible<2->{doall.bat} \\
+      \visible<3->{doall.cmd} \\
+      \visible<4->{doall.sh} \\
+      \visible<5->{problem.xml} \\
+    \end{tabular}
+  \end{center}
+}
+\frame{
+  \frametitle{Библиотеки}
+
+  \begin{center}
+    \begin{tabular}{l}
+      \visible<2->{testlib.h} \\
+      \visible<3->{random.h} \\
+      \visible<4->{testlib4j} \\
+    \end{tabular}
+  \end{center}
+}
+\frame{
+  \frametitle{Контроль версий}
+
+  \begin{center}
+    \begin{tabular}{l}
+      \visible<2->{Какой контроль?} \\
+      \visible<3->{CVS} \\
+      \visible<4->{subversion} \\
+      \visible<5->{git?} \\
+      \visible<5->{Polygon?} \\
+    \end{tabular}
+  \end{center}
+}
+\frame{
+  \frametitle{Polygon}
+
+  \begin{center}
+    \begin{tabular}{l}
+      \visible<2->{Централизованный} \\
+      \visible<3->{Валидация всего} \\
+      \visible<4->{Рабочие копии} \\
+      \visible<5->{Архив} \\
+      \visible<6->{Поиск} \\
+    \end{tabular}
+  \end{center}
+}
+
+\end{document}
